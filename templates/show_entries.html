@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+  
+  
+  	<script>
+  		$(function() {
+    		$( "#datepicker" ).datepicker({ dateFormat: 'dd/mm/yy' });
+  		});
+	</script>
+	<script>
+		  $(function() {
+			$('#timepicker').timepicker({ timeFormat: 'G:i' });
+		  });
+	</script>
+
+    <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+      <dl>
+        <dt>Event Title:
+        <dd><input type=text size=30 name=title>
+        <dt>Date: 
+        <dd><input type=text id=datepicker name=start_date />
+		<input type=text id=timepicker name=start_time />
+		<dt>Location:
+        <dd><input type=text size=30 name=location>
+        <dt>Description:
+        <dd><textarea name=text rows=5 cols=40></textarea>
+        <dd><input type=submit value=Share>
+      </dl>
+    </form>
+  {% endif %}
+  <ul class=entries>
+  {% for entry in entries %}
+    <li><h2>{{ entry.title }}</h2>
+    <p class=time>{{ entry.start_datetime }}</p>
+    <p>{{ entry.location }}</p>
+    <p>{{ entry.text|safe }}</p>
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}
