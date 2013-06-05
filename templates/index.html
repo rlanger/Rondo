@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+
+   <div class=invisipage>
+
+    <form action="{{ url_for('show_entries') }}" method=post>
+      <dl>
+        <dd><input type=text size=30 name=title placeholder="Name your event" class=biginput>
+        <!--<dd><input type=submit value="Get Inspired">-->
+        <dd><input type=submit value="Let's get this party started">
+      </dl>
+    </form>
+  </div>
+  
+  <div class=page>
+  	<p>Invitations (<a href="">view all</a>)</p>
+  	<p>Upcoming Events (<a href="">view all</a>)</p>	
+  </div>
+
+
+<!--<p>get inspired / search other cities</p>
+<p>dashboard (invites, upcoming, profile)</p>-->
+
+{% endblock %}

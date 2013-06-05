@@ -3,7 +3,7 @@ import sqlite3, re
 from flask import Flask, request, session, g, redirect, url_for, \
 	abort, render_template, flash
 from contextlib import closing
-
+from flask.ext.login import LoginManager
 	
 # configuration
 DATABASE = '/tmp/flaskr.db'
@@ -17,6 +17,8 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 app.debug = DEBUG
+
+login_manager = LoginManager()
 	
 # creates the database tables
 def init_db():
@@ -37,11 +39,33 @@ def teardown_request(exception):
 	g.db.close()
 	
 @app.route('/')
+def homepage():
+	return render_template('index.html')
+	
+@app.route('/get_inspired')	
+def get_inspired(propmt):
+	return render_template('index.html')
+	
+@app.route('/dashboard')	
+def dashboard():
+	return render_template('dashboard.html')
+
+
+@app.route('/events', methods=['POST', 'GET'])
 def show_entries():
+
 	cur = g.db.execute('select title, description, start_datetime, location from entries order by start_datetime')
 	entries = [dict(title=row[0], text=row[1], start_datetime=row[2], location=row[3]) for row in cur.fetchall()]
-	return render_template('show_entries.html', entries=entries)
 	
+	if request.method =='POST':
+		event_title = request.form['title'];
+		print event_title
+		return render_template('show_entries.html', entries=entries, event_title=event_title)
+		
+	else:
+		return render_template('show_entries.html', entries=entries, event_title="")
+
+
 @app.route('/add', methods=['POST'])
 def add_entry():
 	if not session.get('logged_in'):
@@ -95,4 +119,5 @@ def logout():
 	
 if __name__ == '__main__':
 	init_db()
+	login_manager.init_app(app)
 	app.run()

@@ -1,5 +1,5 @@
 <!doctype html>
-<title>Flaskr</title>
+<title>Rondo</title>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="static/jquery.timepicker.js"></script>
@@ -8,17 +8,17 @@
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 <link rel=stylesheet href="static/jquery.timepicker.css" />
 
-<div class=page>
-  <h1>Flaskr</h1>
-  <div class=metanav>
+  <div id=navigation>
+  <a href="/">Rondo</a>
+  <a href="/dashboard">dashboard</a>
   {% if not session.logged_in %}
     <a href="{{ url_for('login') }}">log in</a>
   {% else %}
     <a href="{{ url_for('logout') }}">log out</a>
   {% endif %}
   </div>
+  
   {% for message in get_flashed_messages() %}
     <div class=flash>{{ message }}</div>
   {% endfor %}
   {% block body %}{% endblock %}
-</div>
