@@ -1,1 +1,1 @@
-web: python rondo.py
+web: gunicorn hello:app

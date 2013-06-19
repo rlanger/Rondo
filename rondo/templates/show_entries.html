@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if g.user.is_authenticated() %}
+  
+  
+  	<canvas id="eventcard" width="500" height="300">
+  	    Your browser does not support HTML5 Canvas element.
+  	</canvas>
+  	<script type="text/javascript">
+  		window.addEventListener('load', function () {
+    	var element = document.getElementById('eventcard');
+    	if (!element || !element.getContext) {
+      		return;
+    	}
+
+    	var context = element.getContext('2d');
+    	if (!context || !context.drawImage) {
+       		return;
+    	}
+
+		ctx.fillStyle = '#000'; // set canvas background color
+		ctx.fillRect  (0, 0, 200, 200);  // now fill the canvas
+  	</script>
+  
+  
+  	<script>
+  		$(function() {
+    		$( "#datepicker" ).datepicker({ dateFormat: 'dd/mm/yy' });
+  		});
+	</script>
+	<script>
+		  $(function() {
+			$('#timepicker').timepicker({ timeFormat: 'G:i' });
+		  });
+	</script>
+
+  	<div class=page>
+
+    <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+      <dl>
+        <dt>Event Title:
+        <dd><input type=text size=30 name=title value="{{ event_title }}">
+        <dt>Related:
+        <dt>Leonard Cohen at Centre in the Square x (attach, save for later)
+        <dt>Date: 
+        <dd><input type=text id=datepicker name=start_date />
+		<input type=text id=timepicker name=start_time />
+		<dt>Location:
+        <dd><input type=text size=30 name=location>
+        <dt>About This Event:
+        <dd><textarea name=text rows=5 cols=40></textarea>
+        <dd><input type=submit value=Share>
+      </dl>
+    </form>
+  {% endif %}
+  <ul class=entries>
+  {% for entry in entries %}
+    <li><h2>{{ entry.name }}</h2>
+    <p class=time>{{ entry.start_datetime }}</p>
+    <p>{{ entry.location }}</p>
+    <p>{{ entry.description|safe }}</p>
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+  {% endfor %}
+  </ul>
+  
+  </div>
+{% endblock %}

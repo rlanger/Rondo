@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+
+    <form action="{{ url_for('show_entries') }}" method=post class="form-inline">
+      	<input type=text size=30 name=title placeholder="Name your event" class=biginput>
+        <!--<input type=submit value="Get Inspired">-->
+        <input type=submit value="Get this party started">
+    </form>
+  
+  	<p>Invitations (<a href="">view all</a>)</p>
+  	<p>Upcoming Events (<a href="">view all</a>)</p>	
+
+
+<!--<p>get inspired / search other cities</p>
+<p>dashboard (invites, upcoming, profile)</p>-->
+
+{% endblock %}

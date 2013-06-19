@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+
+  {% if session.logged_in %}
+
+  <div class=invisipage>
+
+ <h1>My Events</h1>
+ <ul class=entries>
+  {% for entry in entries %}
+    <li><h2>{{ entry.title }}</h2>
+    <p class=time>{{ entry.start_datetime }}</p>
+    <p>{{ entry.location }}</p>
+    <p>{{ entry.text|safe }}</p>
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+  {% endfor %}
+  </ul>
+  
+  </div>
+  
+  {% endif %}
+  
+{% endblock %}
