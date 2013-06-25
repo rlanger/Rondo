@@ -1,15 +1,91 @@
 {% extends "layout.html" %}
 {% block body %}
 
-    <form action="{{ url_for('show_entries') }}" method=post class="form-inline">
-      	<input type=text size=30 name=title placeholder="Name your event" class=biginput>
-        <!--<input type=submit value="Get Inspired">-->
-        <input type=submit value="Get this party started">
-    </form>
-  
-  	<p>Invitations (<a href="">view all</a>)</p>
-  	<p>Upcoming Events (<a href="">view all</a>)</p>	
+<script src="../static/js/index_script.js"></script>
 
+  	
+<!--div id="dialog" title="Dance Camp">
+<img src="../static/posters/Dance-Camp-Poster-2010-v103.jpg" style="height:300px;" />
+  <p>This is a dancing event full of dancing.</p>
+</div-->
+ 
+
+
+<div style="background-color:#ff0; width:100%">
+<h1>Rondo Event Planner (Fancy Header + About)</h1>
+</div>
+
+<div style="margin-top:150px; margin-bottom:200px; margin-left:30%;">
+    <form action="{{ url_for('show_entries') }}" method=post class="form-horizontal">
+      	<input type=text name=title placeholder="Name your event" class="input-large">
+        <button class="btn btn-primary" type=submit style="margin-bottom:6px"> Get this party started</button>
+    </form>
+</div>
+  
+<hr />
+<p><a href="">Anastasia</a> invited you to <a href="">Walk the High Line</a> - Accept / Decline / Maybe</p>
+<p><a href="https://rebecca.tent.is">Eli</a> invited you to <a href="">NYC Reactor Open Night</a> - Accept / Decline</p>
+<p>Sonali (Hacker School) invited you to <a href="">Carin Meier - Robot Friends and AR Drones</a> - Accept / Decline</p>
+<hr />
+
+  	
+<!--h3>Upcoming | Inspiration</h3-->
+
+
+<form class="input-prepend input-append">
+<div class="btn-group">
+	<button class="btn dropdown-toggle" data-toggle="dropdown">
+      Upcoming
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+    <li><a href="">Inspiration</a></li>
+    <li><a href="">Recommendations</a></li>
+    <li><a href="">Saved</a></li>
+    <!-- Your saved filters, featured, recommended for you, today, today, right now -->
+    </ul>
+</div>
+  <input type="text" class="input-xlarge">
+  <button type="submit" class="btn">Search</button>
+</form>
+<a href="" style="margin-left:7px;">Search Tools</a>
+
+
+
+<style>
+
+.poster {
+	position:relative;
+	margin-bottom:4px;
+	margin-top:40px;
+	top:-40px;
+	
+	-webkit-transition-duration: 0.3s;
+	-moz-transition-duration: 0.3s;
+  	-o-transition-duration: 0.3s;
+  	transition-duration: 0.3s;
+	}
+.poster:hover {
+	margin-bottom:40px;
+	margin-top:0px;
+	}
+</style>
+
+<h4>Today</h4>
+
+<img class="poster" id="nanowrimo" src="../static/posters/Camp NaNoWriMo Poster.jpg" style="height:300px;" />
+<img class="poster" id="dance_camp" src="../static/posters/Dance-Camp-Poster-2010-v103.jpg" style="height:300px;" />
+<img class="poster" src="../static/posters/dave matthews band atlanta poster  2.jpg" style="height:300px;" />
+
+<h4>This Week</h4>
+
+<img class="poster" src="../static/posters/F.U.N.-poster.jpg" style="height:300px;" />
+<img class="poster" src="../static/posters/Flag-Day-Vintage-Poster.jpg" style="height:300px;" />
+<img class="poster" src="../static/posters/Joanna Gorska poster.jpg" style="height:300px;" />
+<img class="poster" src="../static/posters/Student Poster.jpg" style="height:300px;" />
+<img class="poster" src="../static/posters/TAL_live_show_poster2012_blog_sm.jpg" style="height:300px;" />
+
+Details -> Not interested (hide) / Add to Calendar / Save for later / Invite friends / Add to existing event
 
 <!--<p>get inspired / search other cities</p>
 <p>dashboard (invites, upcoming, profile)</p>-->

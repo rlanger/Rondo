@@ -108,7 +108,7 @@ def login():
 		#flash('You were logged in')
 		#return redirect(url_for('show_entries')) 
 			
-	return render_template('login.html', title = 'Sign In', form = form, providers = app.config['OPENID_PROVIDERS'])
+	return render_template('login.html', title = 'Sign In', form = form, providers = rondo.config['OPENID_PROVIDERS'])
 
 
 @oid.after_login

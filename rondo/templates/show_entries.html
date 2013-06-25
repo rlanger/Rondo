@@ -1,27 +1,43 @@
 {% extends "layout.html" %}
 {% block body %}
-  {% if g.user.is_authenticated() %}
+  
+<script>
+$(document).ready(function() {  
+
+  var eventcard_canvas = $("#eventcard")[0];
+  var ecco = eventcard_canvas.getContext("2d");
+  ecco.fillStyle = "#ff0";
+  ecco.fillRect(0, 0, 800, 300);
+  ecco.strokeText("Event Name", 30, 30);
   
   
-  	<canvas id="eventcard" width="500" height="300">
+  $("#chooseDesign").click(function(){
+  	$("#designOptions").slideToggle("slow");
+  });
+  
+  $("#eventName").keyup(function(){
+  	ecco.strokeText("Change Text", 30, 30);
+  });
+    
+});
+</script>
+  	
+  	<div class="row">
+  	<canvas id="eventcard" height="300" width="800" style="border:1px dotted;">
   	    Your browser does not support HTML5 Canvas element.
   	</canvas>
-  	<script type="text/javascript">
-  		window.addEventListener('load', function () {
-    	var element = document.getElementById('eventcard');
-    	if (!element || !element.getContext) {
-      		return;
-    	}
-
-    	var context = element.getContext('2d');
-    	if (!context || !context.drawImage) {
-       		return;
-    	}
-
-		ctx.fillStyle = '#000'; // set canvas background color
-		ctx.fillRect  (0, 0, 200, 200);  // now fill the canvas
-  	</script>
-  
+  	</div>
+  	
+  	<button id="chooseDesign" style="float:right">Choose Design</button>
+  	
+  	<div id="designOptions">
+  	<a href="">Yellow</a> | <a href="">Green</a> | <a href="">Blue</a>
+  	</div>
+  	
+  	<hr />
+  	<div class="row">
+  	<div class="span8">
+  	
   
   	<script>
   		$(function() {
@@ -36,23 +52,74 @@
 
   	<div class=page>
 
-    <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
-      <dl>
-        <dt>Event Title:
-        <dd><input type=text size=30 name=title value="{{ event_title }}">
-        <dt>Related:
-        <dt>Leonard Cohen at Centre in the Square x (attach, save for later)
-        <dt>Date: 
-        <dd><input type=text id=datepicker name=start_date />
-		<input type=text id=timepicker name=start_time />
-		<dt>Location:
-        <dd><input type=text size=30 name=location>
-        <dt>About This Event:
-        <dd><textarea name=text rows=5 cols=40></textarea>
-        <dd><input type=submit value=Share>
-      </dl>
+    <form action="{{ url_for('add_entry') }}" method=post class="form-horizontal add-entry">
+      <div class="control-group">
+        <label class="control-label" for="eventName">What:</label>
+        <div class="controls"><input type=text size=50 name=title id="eventName" placeholder="Name your event" value="{{ event_title }}"></div>
+      </div>
+      <div class="control-group">
+      	<label class="control-label">Who:</label>
+      	<div class="controls"><input type=text size=30 name=location size=50> + OPTIONS</div>
+      </div>
+      <div class="control-group">
+      	<label class="control-label">When:</label>
+      	<div class="controls">
+      		<input class="input-small" type=text id=datepicker name=start_date size=25/>
+			<input class="input-small" type=text id=timepicker name=start_time size=25/> + DOODLE?	
+      	</div>
+      </div>
+      <div class="control-group">
+      	 <label class="control-label">Where:</label>
+      	 <div class="controls"><input type=text size=30 name=location size=50> (auto show map)</div>
+      </div>
+      <hr/>
+      <div class="control-group">
+      	 <label class="control-label">Poster:</label>
+      	 <div class="controls"><button class="btn">Select Image</button></div>
+      </div>
+      
+	  <div class="control-group">
+      	 <div class="controls">
+      	 <label>Message from the host:</label>
+      	 <textarea class="input-xlarge" name=text rows=8></textarea>
+      	 </div>
+	  </div>  
+      <div class="control-group"><div class="controls">
+        <button type=button class="btn">Add Widgets</button> (e.g. potluck planner) <br />
+        <button type=button class="btn">Show Master Plan</button>
+      </div></div>
+      
+    <div class="form-actions">
+        <button type=submit class="btn btn-primary">Share</button>
+        <button type=button class="btn">Preview</button>
+        <button type=button class="btn">Save as Draft</button>
+    </div>
     </form>
-  {% endif %}
+    
+    </div> <!-- / span8 -->
+    </div>
+    <div class="span4">
+    
+    <form class="form-search">
+    <div class="input-append">
+  		<input type="text" class="input-medium search-query">
+  		<button type="submit" class="btn">Search</button>
+  	</div>
+	</form>
+    
+    <dl>
+    	<dd> FILTERS? Recommended-For: Dinner Party X
+    	<dt>Related: (hide related) -- side column?
+        <dd>Leonard Cohen at Centre in the Square x (attach to invite, attach to planning, save for later)
+        <dd>Spinach and Strawberry Salad x (attach to invite, attach to planning, save for later)
+    </dl>
+    <form>
+    	<input type=submit value="More Inspiration">
+    </form>
+    
+    </div>
+	</div>
+	
   <ul class=entries>
   {% for entry in entries %}
     <li><h2>{{ entry.name }}</h2>
