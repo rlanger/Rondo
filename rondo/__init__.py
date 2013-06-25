@@ -24,8 +24,3 @@ if not rondo.debug:
     file_handler.setLevel(logging.INFO)
     rondo.logger.addHandler(file_handler)
     rondo.logger.info('rondo event manager')
-
-
-if __name__ == '__main__':
-	login_manager.init_app(app)
-	app.run()
