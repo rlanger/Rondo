@@ -12,7 +12,7 @@ DATABASE = os.environ.get('DATABASE_URL')
 if os.environ.get('HEROKU') is None:
 	SQLALCHEMY_DATABASE_URI = 'postgresql://cicero:123@localhost/rondodb'
 else:
-	SQLALCHEMY_DATABASE_URI = HEROKU_POSTGRESQL_NAVY_URL
+	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
