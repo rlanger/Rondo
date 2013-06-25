@@ -6,10 +6,15 @@ SECRET_KEY = 'barabbasgavel'	# crypto token
 
 
 # Database configuration
-DATABASE = 'postgresql://localhost/eventsdb'
+DATABASE = os.environ.get('DATABASE_URL')
+#DATABASE = 'postgresql://localhost/eventsdb'
+
+if os.environ.get('HEROKU') is None:
+	SQLALCHEMY_DATABASE_URI = 'postgresql://cicero:123@localhost/rondodb'
+else:
+	SQLALCHEMY_DATABASE_URI = HEROKU_POSTGRESQL_NAVY_URL
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-SQLALCHEMY_DATABASE_URI = 'postgresql://cicero:123@localhost/rondodb'
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 #DATABASE = os.environ.get('DATABASE_URL')
 #print "DATABASE: %s" % DATABASE
