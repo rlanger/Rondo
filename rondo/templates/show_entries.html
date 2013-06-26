@@ -3,43 +3,108 @@
   
 <script>
 $(document).ready(function() {  
-
+// get canvas and canvas context
   var eventcard_canvas = $("#eventcard")[0];
-  var ecco = eventcard_canvas.getContext("2d");
-  ecco.fillStyle = "#ff0";
-  ecco.fillRect(0, 0, 800, 300);
-  ecco.strokeText("Event Name", 30, 30);
+  var context = eventcard_canvas.getContext("2d");
+
+// Array of text elements to include in canvas
+var canvasText = {
+  	what:"",
+  	when:"",
+  	where:""
+};
+  
+var canvasColor = "#ff0";
+
+// Make canvas stretch to 100% width of window
+  function resizeCanvas() {
+	eventcard_canvas.width = window.innerWidth;
+	draw(); 
+  }
+  
+  window.addEventListener('resize', resizeCanvas, false);  
+  resizeCanvas();
+
+  function draw() {
+    context.fillStyle = canvasColor;
+  	context.fillRect(0, 0, window.innerWidth, 300);
+  	context.strokeText(canvasText.what, 30, 30);
+  }
   
   
   $("#chooseDesign").click(function(){
   	$("#designOptions").slideToggle("slow");
   });
   
-  $("#eventName").keyup(function(){
-  	ecco.strokeText("Change Text", 30, 30);
+  var yellowDesign = $("#yellowDesign");
+  yellowDesign.click(function(e){
+  	e.preventDefault();
+  	canvasColor = "#ff0";
+  	draw();
   });
+  
+  var greenDesign = $("#greenDesign");
+  greenDesign.click(function(e){
+  	e.preventDefault();
+    canvasColor = "#3f3";
+    draw();
+  });
+  
+  var blueDesign = $("#blueDesign");
+  blueDesign.click(function(e){
+  	e.preventDefault();
+    canvasColor = "#66f";
+    draw();
+  });
+  
+  $("#eventName").keyup(function(){
+  	console.log($(this).val());
+	canvasText.what = $(this).val();
+	if (canvasText.what.length === 0){
+		canvasText.what = "Your Event";
+	}
+	$("#cardEventName").html(canvasText.what);
+	draw();
+  });
+  
+  
     
 });
 </script>
   	
-  	<div class="row">
-  	<canvas id="eventcard" height="300" width="800" style="border:1px dotted;">
+  	<div class="row-fluid">
+  	<div class="span12">
+  	<canvas id="eventcard" height="300" width="100%">
   	    Your browser does not support HTML5 Canvas element.
   	</canvas>
+  	
+  	<p id="cardEventName" style="position:absolute; top:200px; left:200px">Your Event</p>
+  	<p id="cardWhere"></p>
+  	
   	</div>
+  	</div>
+  	
+  	<div class="container"  style="margin-top:50px">
+	<div class="span12">
   	
   	<button id="chooseDesign" style="float:right">Choose Design</button>
   	
   	<div id="designOptions">
-  	<a href="">Yellow</a> | <a href="">Green</a> | <a href="">Blue</a>
+  	<a href="" id="yellowDesign">Yellow</a> | <a href="" id="greenDesign">Green</a> | <a href="" id="blueDesign">Blue</a>
   	</div>
   	
   	<hr />
   	<div class="row">
   	<div class="span8">
-  	
-  
-  	<script>
+  	<div class=page>
+
+    <form action="{{ url_for('add_entry') }}" method=post class="form-horizontal add-entry">
+      <div class="control-group">
+        <label class="control-label" for="eventName">What:</label>
+        <div class="controls"><input type=text size=50 name=title id="eventName" placeholder="Name your event" value="{{ event_title }}"></div>
+      </div>
+      
+    <script>
   		$(function() {
     		$( "#datepicker" ).datepicker({ dateFormat: 'dd/mm/yy' });
   		});
@@ -49,18 +114,7 @@ $(document).ready(function() {
 			$('#timepicker').timepicker({ timeFormat: 'G:i' });
 		  });
 	</script>
-
-  	<div class=page>
-
-    <form action="{{ url_for('add_entry') }}" method=post class="form-horizontal add-entry">
-      <div class="control-group">
-        <label class="control-label" for="eventName">What:</label>
-        <div class="controls"><input type=text size=50 name=title id="eventName" placeholder="Name your event" value="{{ event_title }}"></div>
-      </div>
-      <div class="control-group">
-      	<label class="control-label">Who:</label>
-      	<div class="controls"><input type=text size=30 name=location size=50> + OPTIONS</div>
-      </div>
+      
       <div class="control-group">
       	<label class="control-label">When:</label>
       	<div class="controls">
@@ -72,6 +126,12 @@ $(document).ready(function() {
       	 <label class="control-label">Where:</label>
       	 <div class="controls"><input type=text size=30 name=location size=50> (auto show map)</div>
       </div>
+      <hr/>
+        <div class="control-group">
+      	<label class="control-label">Host:</label>
+      	<div class="controls"><input type=text size=30 name=location size=50> + OPTIONS</div>
+      </div>
+      
       <hr/>
       <div class="control-group">
       	 <label class="control-label">Poster:</label>
@@ -98,26 +158,7 @@ $(document).ready(function() {
     
     </div> <!-- / span8 -->
     </div>
-    <div class="span4">
-    
-    <form class="form-search">
-    <div class="input-append">
-  		<input type="text" class="input-medium search-query">
-  		<button type="submit" class="btn">Search</button>
-  	</div>
-	</form>
-    
-    <dl>
-    	<dd> FILTERS? Recommended-For: Dinner Party X
-    	<dt>Related: (hide related) -- side column?
-        <dd>Leonard Cohen at Centre in the Square x (attach to invite, attach to planning, save for later)
-        <dd>Spinach and Strawberry Salad x (attach to invite, attach to planning, save for later)
-    </dl>
-    <form>
-    	<input type=submit value="More Inspiration">
-    </form>
-    
-    </div>
+ 
 	</div>
 	
   <ul class=entries>
@@ -132,4 +173,6 @@ $(document).ready(function() {
   </ul>
   
   </div>
+  
+  </div></div>
 {% endblock %}

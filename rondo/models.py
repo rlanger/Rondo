@@ -10,7 +10,9 @@ class User(db.Model):
 	nickname = db.Column(db.String(64), unique = True)
 	email = db.Column(db.String(120), unique = True)
 	role = db.Column(db.SmallInteger, default = ROLE_USER)
+	entity_url = db.Column(db.String(120), unique = True)
 	events_authored = db.relationship('Event', backref = 'author', lazy = 'dynamic')
+
 	
 	def avatar(self, size):
 		return 'http://www.gravatar.com/avatar/' + md5(self.email).hexdigest() + '?d=mm&s=' + str(size)

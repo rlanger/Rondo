@@ -28,6 +28,7 @@
         	<a class="brand" href="/">Rondo</a>
         	<ul class="nav pull-right">
               {% if g.user.is_authenticated() %}
+                <li><a href="">Dashboard</a></li>
             	<li class="dropdown {%if request.path == "/user/"+g.user.nickname %}active{% endif %}">
             	<a href="" 
             		class="dropdown-toggle" 
@@ -36,7 +37,6 @@
             		</a>
             			<ul class="dropdown-menu">
             				<li><a href="{{ url_for('profile', nickname = g.user.nickname) }}">Profile</a></li>
-            				<li><a href="">Dashboard</a></li>
             				<li><a href="{{ url_for('logout') }}">Logout</a></li>
     					</ul></li>
               {% else %}
@@ -51,12 +51,9 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
 	{{ message }}
 	</div>
-  {% endfor %}  
-	
-	<div class="container"  style="margin-top:50px">
-		<div class="span12">
+  {% endfor %}  	
+
           {% block body %}{% endblock %}
-        </div>
 	</div> <!-- /container -->
 </body>
 </html>
